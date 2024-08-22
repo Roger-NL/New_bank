@@ -15,17 +15,24 @@ sequelize.sync()
 
 // Rota para registrar um novo usuário
 app.post('/api/register', async (req, res) => {
-    const { username, password } = req.body;
+    const { username, password, cpf, birthDate } = req.body;
     try {
         const existingUser = await User.findOne({ where: { username } });
         if (existingUser) {
             return res.status(400).json({ error: 'Nome de usuário já está em uso' });
         }
 
+        const existingCpf = await User.findOne({ where: { cpf } });
+        if (existingCpf) {
+            return res.status(400).json({ error: 'CPF já cadastrado' });
+        }
+
         const hashedPassword = await bcrypt.hash(password, 10);
         const user = await User.create({
             username,
-            password: hashedPassword
+            password: hashedPassword,
+            cpf,
+            birthDate
         });
 
         return res.status(201).json({ message: 'Usuário registrado com sucesso!' });
@@ -54,7 +61,9 @@ app.post('/api/login', async (req, res) => {
             user: {
                 id: user.id,
                 username: user.username,
-                saldo: user.saldo
+                saldo: user.saldo,
+                cpf: user.cpf,
+                birthDate: user.birthDate
             }
         });
     } catch (error) {

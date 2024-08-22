@@ -3,12 +3,14 @@ document.getElementById('registerForm')?.addEventListener('submit', async (e) =>
     e.preventDefault();
     const username = document.getElementById('username').value.trim();
     const password = document.getElementById('password').value.trim();
+    const cpf = document.getElementById('cpf').value.trim();
+    const birthDate = document.getElementById('birthDate').value;
 
     try {
         const response = await fetch('/api/register', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
+            body: JSON.stringify({ username, password, cpf, birthDate })
         });
         const data = await response.json();
 
@@ -60,6 +62,8 @@ function loadUserData() {
 
     document.getElementById('username').textContent = user.username;
     document.getElementById('userId').textContent = user.id;
+    document.getElementById('cpf').textContent = user.cpf;
+    document.getElementById('birthDate').textContent = new Date(user.birthDate).toLocaleDateString('pt-BR');
     document.getElementById('saldo').textContent = `R$ ${user.saldo.toFixed(2)}`;
 }
 
