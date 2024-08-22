@@ -3,23 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Banco Virtual - Login</title>
+    <title>Login - Banco Virtual</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Banco Virtual</h1>
-    <div id="login">
-        <h2>Login</h2>
+    <div class="container">
+        <h1>Login</h1>
         <form id="loginForm">
-            <label for="loginUsername">Nome de usuário:</label>
+            <label for="loginUsername">Nome de Usuário:</label>
             <input type="text" id="loginUsername" name="username" required>
+
             <label for="loginPassword">Senha:</label>
             <input type="password" id="loginPassword" name="password" required>
-            <button type="submit">Login</button>
-        </form>
-    </div>
 
-    <p>Não tem uma conta? <a href="register.html">Faça já o seu registro</a></p>
+            <button type="submit" class="btn-primary">Login</button>
+        </form>
+        <p>Não possui uma conta? <a href="register.html">Registre-se aqui</a></p>
+    </div>
 
     <script src="js/main.js"></script>
 </body>

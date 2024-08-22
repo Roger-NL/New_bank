@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Histórico de Transações - Banco Virtual</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+    <script>
+        function carregarHistorico() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'index.html';
+                return;
+            }
+
+            fetch(`/historico/${user.id}`)
+                .then(response => response.json())
+                .then(data => {
+                    const tabela = document.getElementById('tabelaTransacoes');
+                    tabela.innerHTML = ''; // Limpa qualquer conteúdo anterior
+                    if (data.length === 0) {
+                        const row = tabela.insertRow();
+                        const cell = row.insertCell(0);
+                        cell.colSpan = 3;
+                        cell.textContent = 'Nenhuma transação encontrada.';
+                    } else {
+                        data.forEach(transacao => {
+                            const row = tabela.insertRow();
+                            const tipo = row.insertCell(0);
+                            const valor = row.insertCell(1);
+                            const dataHora = row.insertCell(2);
+
+                            tipo.textContent = transacao.type;
+                            valor.textContent = `R$ ${transacao.amount.toFixed(2)}`;
+                            dataHora.textContent = new Date(transacao.createdAt).toLocaleString();
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Erro ao carregar histórico:', error);
+                    alert('Erro ao carregar histórico.');
+                });
+        }
+    </script>
+</head>
+<body onload="carregarHistorico()">
+    <h1>Histórico de Transações</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Tipo de Transação</th>
+                <th>Valor</th>
+                <th>Data e Hora</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaTransacoes"></tbody>
+    </table>
+    <button onclick="window.location.href='dashboard.html'">Voltar para o Dashboard</button>
+</body>
+</html>

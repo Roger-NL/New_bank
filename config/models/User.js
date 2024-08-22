@@ -1,18 +1,27 @@
-const { Sequelize, DataTypes } = require('sequelize');
+const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
-// Define o modelo User
 const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
+    },
     username: {
-        type: DataTypes.STRING,     // Define o tipo de dado como string
-        allowNull: false,           // O campo não pode ser nulo (obrigatório)
-        unique: true                // Garante que cada nome de usuário seja único
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true
     },
     password: {
-        type: DataTypes.STRING,     // Define o tipo de dado como string
-        allowNull: false            // O campo não pode ser nulo (obrigatório)
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    saldo: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0.0
     }
+}, {
+    timestamps: true
 });
 
-// Exporta o modelo para que possa ser utilizado em outras partes do projeto
 module.exports = User;

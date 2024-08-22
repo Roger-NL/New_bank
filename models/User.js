@@ -1,8 +1,12 @@
-// models/User.js
 const { DataTypes } = require('sequelize');
 const sequelize = require('../config/database');
 
 const User = sequelize.define('User', {
+    id: {
+        type: DataTypes.UUID,
+        defaultValue: DataTypes.UUIDV4,
+        primaryKey: true
+    },
     username: {
         type: DataTypes.STRING,
         allowNull: false,
@@ -14,7 +18,7 @@ const User = sequelize.define('User', {
     },
     saldo: {
         type: DataTypes.FLOAT,
-        defaultValue: 0.0 // Saldo inicial padrão
+        defaultValue: 0.0
     }
 }, {
     timestamps: true
