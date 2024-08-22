@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Banco Virtual</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script>
+        // Função para carregar os dados do usuário ao carregar a página
+        function carregarDados() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (user) {
+                document.getElementById('username').innerText = user.username;
+                document.getElementById('saldo').innerText = `Saldo: R$ ${user.saldo}`;
+            } else {
+                window.location.href = 'index.html'; // Redireciona para login se não estiver autenticado
+            }
+        }
+    </script>
+</head>
+<body onload="carregarDados()">
+    <h1>Bem-vindo, <span id="username"></span>!</h1>
+    <p id="saldo"></p>
+
+    <nav>
+        <ul>
+            <li><a href="#">Ver Saldo</a></li>
+            <li><a href="#">Histórico de Transações</a></li>
+            <li><a href="index.html">Logout</a></li>
+        </ul>
+    </nav>
+</body>
+</html>
